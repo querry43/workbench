@@ -14,28 +14,66 @@ module bench() {
     pillar_depth = depth - top_overhang - top_overhang;
     pillar_bottom_support_height = 75;
 
-    translate([top_overhang, top_overhang])
-    left_pillar();
+    frame();
 
-    translate([445, 0, height - top_height])
-    top(600, false);
+    bridge();
 
-    translate([top_overhang + 445 + 605, top_overhang])
-    right_pillar();
-
-    translate([510, 40, height-top_height])
-    rotate([0, 180, 0])
-    toggle_latch();
-
-    translate([510, depth - 40 - 33, height-top_height])
-    rotate([0, 180, 0])
-    toggle_latch();
-
-    translate([1042.5, 0, height - 50])
-    rotate([90, 0, 90])
-    piano_hinge(depth, false);
+    color("FireBrick")
+    hardware();
 
 
+
+    module frame() {
+        translate([top_overhang, top_overhang])
+        left_pillar();
+
+        translate([top_overhang + 445 + 605, top_overhang])
+        right_pillar();
+    }
+
+    module bridge() {
+        translate([445, 0, height - top_height])
+        top(600, false);
+    }
+
+    module hardware() {
+        for (y = [40, depth - 40 - 33]) {
+            translate([510, y, height-top_height])
+            rotate([0, 180, 0])
+            toggle_latch();
+        }
+
+
+        translate([1042.5, 0, height - 50])
+        rotate([90, 0, 90])
+        piano_hinge(depth, false);
+
+        for (y = [50, depth/2, depth - 50]) {
+            translate([428, y, height - (top_height/2)])
+            rotate([0, 90])
+            3_8_metal_rod(40);
+        }
+
+        for (x = [top_overhang+50, top_overhang+290, top_overhang+1100, top_overhang+1320]) {
+            translate([x, depth-top_overhang-12, height-top_height-30])
+            bolt();
+
+            translate([x, top_overhang+7, height-top_height-51])
+            clamp();
+        }
+
+        module bolt() {
+            echo("top bolt");
+            cylinder(h = 34, d = 10);
+        }
+
+        module clamp() {
+            echo("top blamp");
+            translate([0,20,25])
+            cube([25,25,25]);
+            cube([25,45,25]);
+        }
+    }
 
     module top(length, add_overhang = true) {
         length = length + (add_overhang ? top_overhang*2 : 0);

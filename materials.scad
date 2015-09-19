@@ -19,6 +19,10 @@ piano_hinge(500);
 translate([0, 800])
 piano_hinge(500, false);
 
+translate([0, 450, in_to_mm(3/16)])
+rotate([0, 90])
+3_8_metal_rod(400);
+
 module parts_bin() {
     depth = 343;
     width = 267;
@@ -158,7 +162,7 @@ module project_bin(height = 81) {
 
 module tall_project_bin() { project_bin(height = 154); }
 
-module square_tube(length, width = 25, wall_thickness) {
+module square_tube(length, width, wall_thickness) {
     $fn = 10;
     wall_thickness = 1.59; // 16 gauge
 
@@ -187,7 +191,7 @@ module 1in_16ga_square_tube(length) {
     echo(str("1in 16ga square tube: ", length));
     square_tube(
         length = length,
-        width = 25,
+        width = in_to_mm(1),
         wall_thickness = 1.59
     );
 }
@@ -241,3 +245,14 @@ module piano_hinge(length, open = true) {
         cube([length, hinge_size, hinge_thickness]);
     }
 }
+
+module metal_rod(length, diameter) {
+    cylinder(h = length, d = diameter);
+}
+
+module 3_8_metal_rod(length) {
+    echo(str("3/8 rod: ", length));
+    metal_rod(length, in_to_mm(3/8));
+}
+
+function in_to_mm(in) = in * 25.4;
