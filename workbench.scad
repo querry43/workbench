@@ -27,12 +27,12 @@ module bench() {
         translate([top_overhang, top_overhang])
         left_pillar();
 
-        translate([top_overhang + 445 + 605, top_overhang])
+        translate([top_overhang + 441 + 605, top_overhang])
         right_pillar();
     }
 
     module bridge() {
-        translate([445, 0, height - top_height])
+        translate([439, 0, height - top_height])
         top(600, false);
     }
 
@@ -44,7 +44,7 @@ module bench() {
         }
 
 
-        translate([1042.5, 0, height - 50])
+        translate([1036.5, 0, height - 50])
         rotate([90, 0, 90])
         piano_hinge(depth, false);
 
@@ -54,11 +54,11 @@ module bench() {
             3_8_metal_rod(40);
         }
 
-        for (x = [top_overhang+50, top_overhang+290, top_overhang+1100, top_overhang+1320]) {
+        for (x = [top_overhang+50, top_overhang+290, top_overhang+1090, top_overhang+1320]) {
             translate([x, depth-top_overhang-12, height-top_height-30])
             bolt();
 
-            translate([x, top_overhang+7, height-top_height-51])
+            translate([x-25/2, top_overhang+7, height-top_height-51])
             clamp();
         }
 
@@ -100,13 +100,13 @@ module bench() {
     }
 
     module left_pillar() {
-        pillar(340);
+        pillar(334);
 
         %bins();
 
         module bins() {
             for (i = [0 : 4]) {
-                translate([30, 0, 85 + 95 * i])
+                translate([28, 0, 85 + 95 * i])
                 project_bin();
             }
         }
