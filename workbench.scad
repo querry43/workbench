@@ -87,12 +87,29 @@ module bench() {
     }
 
     module right_pillar() {
-        pillar(321);
+        pillar_width = 321;
+        num_bins = 9;
 
+        pillar(pillar_width);
+
+        sliders();
         %bins();
 
+        module sliders() {
+            bottom_height = 120;
+            for (i = [0 : num_bins-1]) {
+                translate([in_to_mm(1), 0, bottom_height + 55 * i])
+				    rotate([180, 0, 90])
+                1_2_angle_iron(pillar_depth);
+
+                translate([pillar_width-in_to_mm(1), pillar_depth, bottom_height + 55 * i])
+				    rotate([180, 0, -90])
+                1_2_angle_iron(pillar_depth);
+            }
+        }
+
         module bins() {
-            for (i = [0 : 6]) {
+            for (i = [0 : num_bins-1]) {
                 translate([26, 0, 85 + 55 * i])
                 parts_bin();
             }
@@ -100,12 +117,29 @@ module bench() {
     }
 
     module left_pillar() {
-        pillar(334);
+        pillar_width = 334;
+        num_bins = 5;
 
+        pillar(pillar_width);
+
+        sliders();
         %bins();
 
+        module sliders() {
+            bottom_height = 155;
+            for (i = [0 : num_bins-1]) {
+                translate([in_to_mm(1), 0, bottom_height + 95 * i])
+				    rotate([180, 0, 90])
+                1_2_angle_iron(pillar_depth);
+
+                translate([pillar_width-in_to_mm(1), pillar_depth, bottom_height + 95 * i])
+				    rotate([180, 0, -90])
+                1_2_angle_iron(pillar_depth);
+            }
+        }
+
         module bins() {
-            for (i = [0 : 4]) {
+            for (i = [0 : num_bins-1]) {
                 translate([28, 0, 85 + 95 * i])
                 project_bin();
             }

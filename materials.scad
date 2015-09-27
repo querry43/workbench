@@ -23,6 +23,9 @@ translate([0, 450, in_to_mm(3/16)])
 rotate([0, 90])
 3_8_metal_rod(400);
 
+translate([0, 550])
+1_2_angle_iron(700);
+
 module parts_bin() {
     depth = 343;
     width = 267;
@@ -253,6 +256,16 @@ module metal_rod(length, diameter) {
 module 3_8_metal_rod(length) {
     echo(str("3/8 rod: ", length));
     metal_rod(length, in_to_mm(3/8));
+}
+
+module angle_iron(length, flange_length, width) {
+    cube([length, width, flange_length]);
+    cube([length, flange_length, width]);
+}
+
+module 1_2_angle_iron(length) {
+    echo(str("1/2 angle iron: ", length));
+    angle_iron(length, in_to_mm(1/2), in_to_mm(1/8));
 }
 
 function in_to_mm(in) = in * 25.4;
